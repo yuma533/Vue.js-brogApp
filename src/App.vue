@@ -1,19 +1,31 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+<script>
+import postView from './views/postView.vue';
+import displayView from './views/displayView.vue';
+
+export default {
+	  components: {
+      	postView,
+        displayView
+	  },
+    data() {
+      return{
+        PostView: true,
+        DisplayView: true,
+        blogArray: []
+      }
+    }
+	}
 </script>
 
+
 <template>
-  <div>
+<div>
+    <postView @send-data="(t) => blogArray = t" v-if="PostView" />
     <nav>
-      <router-link to="/postView">postView</router-link>
-      <router-link to="/displayView">displayView</router-link>
+      <display-view v-show="DisplayView" :blogArray="blogArray"></display-view>
+      <router-link to="/postView" @send-data="(t) => blogArray = t">postView</router-link>
+      <router-link to="/displayView" :blogArray="blogArray">/displayView</router-link>
     </nav>
     <router-view></router-view>
   </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
 </template>
